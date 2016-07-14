@@ -1,4 +1,6 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
+player_wins = 0
+computer_wins = 0
 
 def prompt(message)
   Kernel.puts("=> #{message}")
@@ -45,6 +47,16 @@ loop do
   prompt("You chose: #{choice}; Computer choose: #{computer_choice}")
 
   display_results(choice, computer_choice)
+
+  if win?(choice, computer_choice)
+    player_wins += 1
+  elsif win?(computer_choice, choice)
+    computer_wins += 1
+  end
+
+  prompt("You have #{player_wins} wins. Computer has #{computer_wins} wins.")
+
+  break if player_wins == 5 || computer_wins == 5
 
   prompt("Do you want to play again?")
   answer = Kernel.gets().chomp()
