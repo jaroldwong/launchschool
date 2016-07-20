@@ -1,22 +1,31 @@
-puts "Welcome to Calculator!"
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
 
-puts "What is the first number?"
+def prompt(message)
+  puts "=> #{message}"
+end
+
+prompt(MESSAGES["welcome"])
+
+prompt("What is the first number?")
 num1 = gets.chomp.to_i
 
-puts "What is the second number?"
+prompt("What is the second number?")
 num2 = gets.chomp.to_i
 
-puts "What operation would you like to perform?"
+prompt("What operation would you like to perform?")
 operator = gets.chomp.to_s
 
 if operator == "+"
-  puts "The answer is #{num1 + num2}"
+  prompt("The answer is #{num1 + num2}")
 elsif operator == "-"
-  puts "The answer is #{num1 - num2}"
+  prompt("The answer is #{num1 - num2}")
 elsif operator == "*"
-  puts "The answer is #{num1 * num2}"
+  prompt("The answer is #{num1 * num2}")
 elsif operator == "/"
-  puts "The answer is #{num1.to_f / num2.to_f}"
+  prompt("The answer is #{num1.to_f / num2.to_f}")
 else
-  puts "Invalid operator"
+  prompt("Invalid operator")
+end
+    
 end
