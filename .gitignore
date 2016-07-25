@@ -1,0 +1,3 @@
+# ignore ruby basics and  webinar code alongs
+/exercises/webinars
+/exercises/ruby-basics
