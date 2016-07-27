@@ -1,13 +1,14 @@
 def featured(number)
-  featured_number = number
-  
+  number += 1
+  number += 1 until number.odd? && (number % 7 == 0)
+
   loop do
-    featured_number += 1
-    break if featured_number.odd? && (featured_number % 7 == 0) && 
-    (number.to_s.chars.uniq == number.to_s.chars)
+    return number if number.to_s.chars.uniq == number.to_s.chars
+    number += 14
+    break if number >= 9_876_543_210
   end
-  
-  featured_number
+
+  'There is no possible number that fulfills those requirements.'
 end
 
 p featured(12)
