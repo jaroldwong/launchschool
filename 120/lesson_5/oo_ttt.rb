@@ -1,12 +1,3 @@
-require 'pry'
-
-# Write a description of the problem and extract major nouns and verbs.
-# Make an initial guess at organizing the verbs into nouns and do a spike to explore the problem with temporary code.
-# Optional - when you have a better idea of the problem, model your thoughts into CRC cards.
-
-# Tic Tac Toe is a 2-player board game played on a 3x3 grid. Players take turns
-# marking a square. The first player to mark 3 squares in a row wins.
-
 class Board
   WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                   [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
@@ -36,15 +27,21 @@ class Board
   def someone_won?
     !!detect_winner
   end
+  
+  def count_human_marker(squares)
+    squares.collect(&:marker).count(TTTGame::HUMAN_MARKER)
+  end
+  
+  def count_computer_marker(squares)
+    squares.collect(&:marker).count(TTTGame::COMPUTER_MARKER)
+  end
 
   def detect_winner
     WINNING_LINES.each do |line|
-      if  @squares[line[0]].marker == TTTGame::HUMAN_MARKER && @squares[line[1]].marker == TTTGame::HUMAN_MARKER && @squares[line[2]].marker == TTTGame::HUMAN_MARKER
+      if count_human_marker(@squares.values_at(*line)) == 3
         return TTTGame::HUMAN_MARKER
-      elsif @squares[line[0]].marker == TTTGame::COMPUTER_MARKER &&
-            @squares[line[1]].marker == TTTGame::COMPUTER_MARKER &&
-            @squares[line[2]].marker == TTTGame::COMPUTER_MARKER
-          return TTTGame::COMPUTER_MARKER
+      elsif count_computer_marker(@squares.values_at(*line)) == 3
+        return TTTGame::COMPUTER_MARKER
       end
     end
     nil
