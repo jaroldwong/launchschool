@@ -1,5 +1,3 @@
-require 'pry'
-
 class Todo
   DONE_MARKER = 'X'
   UNDONE_MARKER = ' '
@@ -110,16 +108,51 @@ class TodoList
   def to_a
     @todos
   end
+  
+  def each
+    counter = 0
+    
+    while counter < @todos.size do
+      yield(@todos[counter])
+      counter += 1
+    end 
+    self
+  end
+  
+  def select
+    list = TodoList.new(title)
+    each do |todo|
+      list.add(todo) if yield(todo)
+    end
+    list
+  end
+  
+  def find_by_title(title)
+    select { |todo| todo.title == title }.first
+  end
+  
+  def all_done
+    select { |todo| todo.done? }
+  end
+  
+  def all_not_done
+    select { |todo| !todo.done? }
+  end
+  
+  def mark_done(title)
+    find_by_title(title) && find_by_title(title).done!
+  end
+  
+  def mark_all_done
+    each { |todo| todo.done! }
+  end
+  
+  def mark_all_undone
+    each { |todo| todo.undone! }
+  end
 end
 
 todo1 = Todo.new("Buy milk")
 todo2 = Todo.new("Clean room")
 todo3 = Todo.new("Go to gym")
 list = TodoList.new("Today's Todos")
-
-list.add(todo1)                 # adds todo1 to end of list, returns list
-list.add(todo2)                 # adds todo2 to end of list, returns list
-list.add(todo3)                 # adds todo3 to end of list, returns list
-list << todo3
-
-binding.pry
