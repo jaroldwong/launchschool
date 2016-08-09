@@ -10,21 +10,11 @@ class Banner
   private
 
   def horizontal_rule
-    line = []
-    @message.size.times do
-      line << '-'
-    end
-    
-    '+-' + line.join() + '-+'
+    '+-' + "#{'-' * (@message.size)}" + '-+'
   end
 
   def empty_line
-    line = []
-    @message.size.times do 
-      line << ' '
-    end
-    
-    "| " + line.join() + " |"
+    "| " + "#{' ' * (@message.size)}" + " |"
   end
 
   def message_line
