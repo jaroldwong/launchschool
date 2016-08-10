@@ -22,8 +22,7 @@ class Shelter
 end
 
 class Owner
-  attr_reader :name
-  attr_accessor :pets
+  attr_reader :name, :pets
   
   def initialize(name)
     @name = name
@@ -35,7 +34,7 @@ class Owner
   end
   
   def number_of_pets
-    @pets.size
+    pets.size
   end
 end
 
