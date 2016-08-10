@@ -1,5 +1,52 @@
 # https://launchschool.com/exercises/693f3373
 
+class Shelter
+  def initialize
+    @owners = []
+  end
+  
+  def adopt(owner, pet)
+    owner.add(pet)
+    @owners << owner
+  end
+  
+  def print_adoptions
+    @owners.uniq.each do |owner|
+      puts "#{owner.name} has adopted the following pets:"
+      owner.pets.each do |pet|
+        puts "a #{pet.type} named #{pet.name}"
+      end
+      puts ' '
+    end
+  end
+end
+
+class Owner
+  attr_reader :name
+  attr_accessor :pets
+  
+  def initialize(name)
+    @name = name
+    @pets = []
+  end
+  
+  def add(pet)
+    @pets << pet
+  end
+  
+  def number_of_pets
+    @pets.size
+  end
+end
+
+class Pet
+  attr_reader :type, :name
+  
+  def initialize(type, name)
+    @type = type
+    @name = name
+  end
+end
 
 butterscotch = Pet.new('cat', 'Butterscotch')
 pudding      = Pet.new('cat', 'Pudding')
