@@ -1,29 +1,13 @@
 class PerfectNumber
   def self.classify(number)
     raise RuntimeError if number < 0
-    
-    sum_of_factors = factors(number).reduce(&:+)
+
+    sum_of_factors = (1...number).select { |n| number % n == 0 }.reduce(&:+)
 
     case
-    when sum_of_factors == number
-      return "perfect"
-    when sum_of_factors > number
-      return "abundant"
-    when sum_of_factors < number
-      return "deficient"
+      when sum_of_factors == number then "perfect"
+      when sum_of_factors > number then "abundant"
+      when sum_of_factors < number then "deficient"
     end
-  end
-
-  def self.factors(number)
-    factors = []
-    divisor = 1
-
-    loop do
-      factors << divisor if number % divisor == 0
-      divisor += 1
-      break if number == divisor
-    end
-
-    factors
   end
 end
