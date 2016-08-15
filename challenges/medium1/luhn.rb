@@ -4,52 +4,37 @@ class Luhn
   end
 
   def addends
-    digits = @number.to_s.split('').map(&:to_i)
-    check_digit = digits.last
+    digits = @number.to_s.split('').map(&:to_i).reverse
 
-    if digits.size.odd?
-      doubled = digits.each_with_index do |digit, idx|
-        if idx.odd?
-          if (digit * 2) > 9
-            digits[idx] = digit * 2 - 9
-          else
-            digits[idx] = digit * 2
-          end
-        end
-      end
-    else
-      doubled = digits.each_with_index do |digit, idx|
-        if idx.even?
-          if (digit * 2) > 9
-            digits[idx] = digit * 2 - 9
-          else
-            digits[idx] = digit * 2
-          end
+    digits.each_with_index do |digit, idx|
+      if idx.odd?
+        if digit * 2 > 9
+          digits[idx] = digit * 2 - 9
+        else
+          digits[idx] = digit * 2
         end
       end
     end
 
-    doubled
+    digits.reverse
   end
 
   def checksum
-    self.addends.reduce(&:+)
+    addends.reduce(&:+)
   end
 
   def valid?
-    return true if self.checksum % 10 == 0
-    false
+    checksum % 10 == 0
   end
 
   def self.create(number)
-    digits = number.to_s.split('').map(&:to_i)
-    digits.push(nil)
+    base_number = number * 10
 
-    (0..9).each do |check_digit|
-      digits[-1] = check_digit
-      break if new(digits.join.to_i).valid?
+    if new(base_number).valid?
+      base_number
+    else
+      check_digit = new(base_number).checksum % 10
+      base_number + (10 - check_digit)
     end
-
-    digits.join.to_i
   end
 end
