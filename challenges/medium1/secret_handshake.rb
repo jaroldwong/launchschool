@@ -23,6 +23,3 @@ class SecretHandshake
     end
   end
 end
-
-handshake = SecretHandshake.new(4)
-p handshake.commands
