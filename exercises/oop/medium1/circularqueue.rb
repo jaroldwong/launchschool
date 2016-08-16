@@ -1,27 +1,21 @@
-require 'pry'
-
 class CircularQueue
   def initialize(buffer_size)
     @buffer_size = buffer_size
     @queue = [nil] * buffer_size
     @last_position = 0
   end
-  
+
   def enqueue(value)
     if @last_position == @buffer_size
       @queue.shift
       @queue << value
       @last_position -= 1
     end
-    
-    # if @last_position < 0
-    #   @last_position = 0
-    # end
-    
+
     @queue[@last_position] = value
     @last_position += 1
   end
-  
+
   def dequeue
     oldest_obj = @queue.shift
     @last_position -= 1 unless @last_position == 0
