@@ -1,21 +1,22 @@
 class GuessingGame
-  def initialize
-    @random_number = rand(1..100)
-    @guesses_left = 7
+  def initialize(low_value, high_value)
+    @range = low_value..high_value
+    @random_number = rand(@range)
+    @guesses_left = Math.log2(high_value - low_value + 1).to_i + 1
   end
-  
+
   def play
     player_guess = 0
-    
-    loop do  
+
+    loop do
       puts "You have #{@guesses_left} guesses remaining"
       loop do
-        puts "Enter a number between 1 and 100:"
+        puts "Enter a number between #{@range.first} and #{@range.last}:"
         player_guess = gets.to_i
-        break if (1..100).include?(player_guess)
+        break if (@range).include?(player_guess)
         puts "Invalid guess."
       end
-    
+
       if player_guess > @random_number
         puts "Your guess is too high"
       elsif player_guess < @random_number
@@ -34,5 +35,5 @@ class GuessingGame
   end
 end
 
-game = GuessingGame.new
+game = GuessingGame.new(501, 1500)
 game.play
