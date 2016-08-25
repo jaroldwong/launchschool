@@ -1,6 +1,11 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
+configure do
+  enable :sessions
+  set :session_secret, 'super secret'
+end
+
 root = File.expand_path("..", __FILE__)
 
 get "/" do
@@ -13,6 +18,11 @@ end
 get "/:filename" do
   file_path = root + "/data/" + params[:filename]
 
-  headers["Content-Type"] = "text/plain"
-  File.read(file_path)
+  if File.file?(file_path)
+    headers["Content-Type"] = "text/plain"
+    File.read(file_path)
+  else
+    session[:message] = "#{params[:filename]} does not exist."
+    redirect "/"
+  end
 end
