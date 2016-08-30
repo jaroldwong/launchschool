@@ -2,7 +2,7 @@
 
 _Italics_
 
-**SO BOLD**
+**BOLD TEXT**
 
 >This is a blockquote
 
