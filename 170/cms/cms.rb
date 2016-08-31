@@ -11,7 +11,7 @@ def data_path
   if ENV["RACK_ENV"] == "test"
     File.expand_path("../test/data", __FILE__)
   else
-    File.expand_path("data", __FILE__)
+    File.expand_path("../data", __FILE__)
   end
 end
 
@@ -22,7 +22,7 @@ end
 
 def load_file_content(file_path)
   if File.extname(file_path) == ".md"
-    render_markdown(File.read(file_path))
+    erb render_markdown(File.read(file_path))
   else
     headers["Content-Type"] = "text/plain"
     File.read(file_path)
